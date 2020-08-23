@@ -1,39 +1,114 @@
-const phone = prompt('Enter your phone number.')
+const $btn = document.getElementById('btn-kick')
+const $btnLightning = document.getElementById('btn-kick-lightning')
 
-/* while (phone.length !== 12) {
-    alert("Please enter a number that is 12 characters long")
-    phone = prompt('Enter your phone number.')
-}  */
 
-function formattedPhone(phone) {
-    let tryPhone = '';
-    for (let i = 0; i < phone.length; i++){
-        
-        if (i < 2) { 
-            tryPhone += phone.charAt(i);
 
-        } else if (i === 2)  {
-            tryPhone += ' (' + phone.charAt(i);
-            
-        } else if (i >= 3 && i < 5) {
-            tryPhone += phone.charAt(i);
+const character = {
+    name: 'Pikachu',
+    defaultHP: 100,
+    damageHP: 100,
+    defaultMana: 100,
+    damageMana: 100,
+    elHP: document.getElementById('health-character'),
+    elProgressbarHp: document.getElementById('progressbar-character'),
+    elMana: document.getElementById('mana-health-character'),
+    elProgressbarMana: document.getElementById('mana-progressbar-character'),
+}
 
-        } else if (i === 5) {
-            tryPhone += ') ' + phone.charAt(i);
+const enemy = {
+    name: 'Charmander',
+    defaultHP: 100,
+    damageHP: 100,
+    elHP: document.getElementById('health-enemy'),
+    elProgressbarHp: document.getElementById('progressbar-enemy')
+}
 
-        } else if (i >= 6 && i < 8) {
-            tryPhone += phone.charAt(i);
+$btn.addEventListener('click', function () {
+    console.log('kick')
+    
+    chengeMana(20, character);
 
-        } else if (i === 8) {
-            tryPhone += '-' + phone.charAt(i) + phone.charAt(i + 1)
+    chengeHP(random(2), character);
+    chengeHP(random(2), enemy);
+});
 
-        } else if (i === 10) {
-            tryPhone += '-' + phone.charAt(i) + phone.charAt(i + 1)
+$btnLightning.addEventListener('click', function () {
+    console.log('kick-lightning')
 
-        }
+        chengeHP(random(50), enemy);
+        chengeHP(random(20), character);
+        chengeMana(-100, character)
+        $btnLightning.disabled = true;    
+});
+
+function init() {
+    console.log('Start game')
+    renderHP(character);
+    renderHP(enemy);
+    renderMana(character);
+};
+
+function renderMana(person) {
+    renderManaLife(person);
+    renderProgressbarMana(person);
+};
+
+function renderManaLife(person) {
+
+    person.elMana.innerText = person.damageMana + '/' + person.defaultMana;
+
+};
+
+function renderProgressbarMana(person) {
+    person.elProgressbarMana.style.width = person.damageMana + '%'
+
+};
+
+
+function renderHP(person) {
+    renderHPLife(person);
+    renderProgressbarHP(person);
+};
+
+function renderHPLife(person) {
+    
+    person.elHP.innerText = person.damageHP + '/' + person.defaultHP;
+    
+};
+
+function renderProgressbarHP(person) {
+    person.elProgressbarHp.style.width = person.damageHP + '%'
+    
+};
+
+function chengeHP(count, person) {
+    if (person.damageHP <= count) {
+        person.damageHP = 0;
+        alert('Бедный ' + person.name + ' проиграл!');
+        $btn.disabled = true;
+        $btnLightning.disabled = true;
+    } else {
+        person.damageHP -= count;
+    }
+    renderHP(person);
+    
+};
+
+function chengeMana(count, person) {
+    person.damageMana += count;
+
+    if (person.damageMana >= person.defaultMana  ) {
+        person.damageMana = person.defaultMana
+        $btnLightning.disabled = false;
     }
     
-    return alert('Tel: ' + tryPhone);
-}
-  formattedPhone(phone);
-  
+ 
+    renderMana(person);
+
+};
+
+function random(num) {
+    return Math.ceil(Math.random() * num)
+};
+
+init();
