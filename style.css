@@ -195,12 +195,7 @@ body {
     background: -webkit-gradient(linear, left top, right top, from(lime), to(#8bf500));
     background: linear-gradient(to right, lime, #8bf500);
 }
-.pokemon .details .hp .bar .mana-health {
-    width: 50%;
-    height: 100%;
-    background: -webkit-gradient(linear, left top, right top, from(lime), to(#8bf500));
-    background: linear-gradient(to right, blue,blue);
-}
+
 .pokemon .details .hp .bar .health.low {
     background: -webkit-gradient(linear, left top, right top, from(#ffcc00), to(#f1f500));
     background: linear-gradient(to right, #ffcc00, #f1f500);

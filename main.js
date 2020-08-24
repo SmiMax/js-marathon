@@ -1,18 +1,14 @@
 const $btn = document.getElementById('btn-kick')
-const $btnLightning = document.getElementById('btn-kick-lightning')
-
-
 
 const character = {
     name: 'Pikachu',
-    defaultHP: 100,
+    defaultHP: 150,
     damageHP: 100,
-    defaultMana: 100,
-    damageMana: 100,
     elHP: document.getElementById('health-character'),
     elProgressbarHp: document.getElementById('progressbar-character'),
-    elMana: document.getElementById('mana-health-character'),
-    elProgressbarMana: document.getElementById('mana-progressbar-character'),
+    renderHPLife: renderHPLife,
+    renderProgressbarHP: renderProgressbarHP,
+    renderHP: renderHP,
 }
 
 const enemy = {
@@ -20,64 +16,37 @@ const enemy = {
     defaultHP: 100,
     damageHP: 100,
     elHP: document.getElementById('health-enemy'),
-    elProgressbarHp: document.getElementById('progressbar-enemy')
+    elProgressbarHp: document.getElementById('progressbar-enemy'),
+    renderHPLife: renderHPLife,
+    renderProgressbarHP: renderProgressbarHP,
+    renderHP: renderHP,
 }
 
 $btn.addEventListener('click', function () {
     console.log('kick')
     
-    chengeMana(20, character);
-
-    chengeHP(random(2), character);
-    chengeHP(random(2), enemy);
-});
-
-$btnLightning.addEventListener('click', function () {
-    console.log('kick-lightning')
-
-        chengeHP(random(50), enemy);
-        chengeHP(random(20), character);
-        chengeMana(-100, character)
-        $btnLightning.disabled = true;    
+    chengeHP(random(20), character);
+    chengeHP(random(20), enemy);
 });
 
 function init() {
     console.log('Start game')
-    renderHP(character);
-    renderHP(enemy);
-    renderMana(character);
+    renderHP.call(character);
+    renderHP.call(enemy);;
 };
 
-function renderMana(person) {
-    renderManaLife(person);
-    renderProgressbarMana(person);
+function renderHP() {
+    this.renderHPLife();
+    this.renderProgressbarHP();
 };
 
-function renderManaLife(person) {
-
-    person.elMana.innerText = person.damageMana + '/' + person.defaultMana;
-
-};
-
-function renderProgressbarMana(person) {
-    person.elProgressbarMana.style.width = person.damageMana + '%'
-
-};
-
-
-function renderHP(person) {
-    renderHPLife(person);
-    renderProgressbarHP(person);
-};
-
-function renderHPLife(person) {
+function renderHPLife() {
     
-    person.elHP.innerText = person.damageHP + '/' + person.defaultHP;
-    
+    this.elHP.innerText = this.damageHP + '/' + this.defaultHP;
 };
 
-function renderProgressbarHP(person) {
-    person.elProgressbarHp.style.width = person.damageHP + '%'
+function renderProgressbarHP() {
+    this.elProgressbarHp.style.width = this.damageHP / this.defaultHP * 100 + '%'
     
 };
 
@@ -86,25 +55,11 @@ function chengeHP(count, person) {
         person.damageHP = 0;
         alert('Бедный ' + person.name + ' проиграл!');
         $btn.disabled = true;
-        $btnLightning.disabled = true;
     } else {
         person.damageHP -= count;
     }
-    renderHP(person);
+    renderHP.call(person);
     
-};
-
-function chengeMana(count, person) {
-    person.damageMana += count;
-
-    if (person.damageMana >= person.defaultMana  ) {
-        person.damageMana = person.defaultMana
-        $btnLightning.disabled = false;
-    }
-    
- 
-    renderMana(person);
-
 };
 
 function random(num) {
