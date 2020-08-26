@@ -9,6 +9,7 @@ const character = {
     renderHPLife: renderHPLife,
     renderProgressbarHP: renderProgressbarHP,
     renderHP: renderHP,
+    chengeHP: chengeHP,
 }
 
 const enemy = {
@@ -20,19 +21,20 @@ const enemy = {
     renderHPLife: renderHPLife,
     renderProgressbarHP: renderProgressbarHP,
     renderHP: renderHP,
+    chengeHP: chengeHP,
 }
 
 $btn.addEventListener('click', function () {
     console.log('kick')
     
-    chengeHP(random(20), character);
-    chengeHP(random(20), enemy);
+    character.chengeHP(random(20));
+    enemy.chengeHP( random(20));
 });
 
 function init() {
     console.log('Start game')
-    renderHP.call(character);
-    renderHP.call(enemy);;
+    character.renderHP();
+    enemy.renderHP();
 };
 
 function renderHP() {
@@ -50,16 +52,15 @@ function renderProgressbarHP() {
     
 };
 
-function chengeHP(count, person) {
-    if (person.damageHP <= count) {
-        person.damageHP = 0;
-        alert('Бедный ' + person.name + ' проиграл!');
-        $btn.disabled = true;
-    } else {
-        person.damageHP -= count;
-    }
-    renderHP.call(person);
+function chengeHP(count) {
+    this.damageHP -= count;
     
+    if (this.damageHP <= 0) {
+        this.damageHP = 0;
+        alert('Бедный ' + this.name + ' проиграл!');
+        $btn.disabled = true;
+    }
+    this.renderHP();
 };
 
 function random(num) {
