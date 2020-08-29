@@ -1,4 +1,10 @@
 const $btn = document.getElementById('btn-kick')
+const $btnLightning = document.getElementById('btn-lightning')
+const elKickLightning = document.getElementById('kick-lightning');
+const elKickThunderJolt = document.getElementById('kick-thunder-jolt');
+const countKicker = countKick()
+const maxKick1 = 10;
+const maxKick2 = 2;
 
 
 const character = {
@@ -26,17 +32,28 @@ const enemy = {
 }
 
 $btn.addEventListener('click', function () {
-    console.log('kick')
     
+    console.log('kick')
     character.chengeHP(random(20));
     enemy.chengeHP(random(20));
+    countKicker(maxKick1, elKickThunderJolt);
     
+});
+
+$btnLightning.addEventListener('click', function () {
+    
+    console.log('kick-Lightning');
+    character.chengeHP(random(40));
+    enemy.chengeHP(random(40));
+    countKicker(maxKick2, elKickLightning);
 });
 
 function init() {
     console.log('Start game')
     character.renderHP();
     enemy.renderHP();
+    renderKick(0, maxKick2, elKickLightning);
+    renderKick(0, maxKick1, elKickThunderJolt);
 };
 
 function renderHP() {
@@ -50,8 +67,7 @@ function renderHPLife() {
 };
 
 function renderProgressbarHP() {
-    this.elProgressbarHp.style.width = this.damageHP / this.defaultHP * 100 + '%'
-    
+    this.elProgressbarHp.style.width = this.damageHP / this.defaultHP * 100 + '%'  
 };
 
 function chengeHP(count) {
@@ -61,6 +77,7 @@ function chengeHP(count) {
         this.damageHP = 0;
         alert('Бедный ' + this.name + ' проиграл!');
         $btn.disabled = true;
+        $btnLightning.disabled = true;
     }
     this.renderHP();
 
@@ -75,7 +92,25 @@ function chengeHP(count) {
 function random(num) {
     return Math.ceil(Math.random() * num)
 };
+function countKick() {
+    let click = 0
+   
+    return function (max, element) {
+        click++
+        
+        renderKick(click,max , element);
+            
+        console.log(click);
+    }
+}
+function renderKick(nowKick,maxKick,element) {
 
+    if (nowKick === maxKick) {
+        element == document.getElementById('kick-thunder-jolt') ? $btn.disabled = true : $btnLightning.disabled = true;         
+        }
+    element.innerText = (maxKick - nowKick) + '/' + maxKick ;
+}
+    
 function generateLog(firstPerson, secondPerson, count) {
     
     const logs = [
