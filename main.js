@@ -1,80 +1,62 @@
+import Pokemon from "./pokemon.js"
 const $btn = document.getElementById('btn-kick')
 const $btnLightning = document.getElementById('btn-lightning')
-const elKickLightning = document.getElementById('kick-lightning');
-const elKickThunderJolt = document.getElementById('kick-thunder-jolt');
-const countKicker = countKick()
-const maxKick1 = 10;
-const maxKick2 = 2;
 
-
-const character = {
+const player1 = new Pokemon({
     name: 'Pikachu',
-    defaultHP: 100,
-    damageHP: 100,
-    elHP: document.getElementById('health-character'),
-    elProgressbarHp: document.getElementById('progressbar-character'),
-    renderHPLife: renderHPLife,
-    renderProgressbarHP: renderProgressbarHP,
-    renderHP: renderHP,
-    chengeHP: chengeHP,
-}
+    type: 'electric',
+    hp: 500,
+    selectors: 'character',
+});
 
-const enemy = {
+const player2 = new Pokemon({
     name: 'Charmander',
-    defaultHP: 100,
-    damageHP: 100,
-    elHP: document.getElementById('health-enemy'),
-    elProgressbarHp: document.getElementById('progressbar-enemy'),
-    renderHPLife: renderHPLife,
-    renderProgressbarHP: renderProgressbarHP,
-    renderHP: renderHP,
-    chengeHP: chengeHP,
+    type: 'fire',
+    hp: 450,
+    selectors: 'enemy',
+});
+
+const BtncountJolt = countBtn(10, $btn);
+$btn.addEventListener('click', function () {
+    BtncountJolt()
+    console.log('kick');
+    player1.chengeHP(random(60, 20), function (count) {
+        console.log(generateLog(player1, player2, count));
+    });
+    player2.chengeHP(random(20));
+    
+    
+});
+const BtnCountLightning = countBtn(2, $btnLightning);
+$btnLightning.addEventListener('click', function () {
+    BtnCountLightning();
+    console.log('kick-Lightning');
+    player1.chengeHP(random(20));
+    player2.chengeHP(random(20));
+    
+});
+
+function countBtn(count = 10, el) {
+    const innerText = el.innerText;
+    el.innerText = `${innerText} (${count})`
+    return function () {
+        count--;
+        if (count === 0) {
+            el.disabled = true;
+        }
+        el.innerText = `${innerText} (${count})`
+        return count;
+    }
 }
 
-$btn.addEventListener('click', function () {
-    
-    console.log('kick')
-    character.chengeHP(random(20));
-    enemy.chengeHP(random(20));
-    countKicker(maxKick1, elKickThunderJolt);
-    
-});
 
-$btnLightning.addEventListener('click', function () {
-    
-    console.log('kick-Lightning');
-    character.chengeHP(random(40));
-    enemy.chengeHP(random(40));
-    countKicker(maxKick2, elKickLightning);
-});
 
-function init() {
-    console.log('Start game')
-    character.renderHP();
-    enemy.renderHP();
-    renderKick(0, maxKick2, elKickLightning);
-    renderKick(0, maxKick1, elKickThunderJolt);
-};
-
-function renderHP() {
-    this.renderHPLife();
-    this.renderProgressbarHP();
-};
-
-function renderHPLife() {
-    
-    this.elHP.innerText = this.damageHP + '/' + this.defaultHP;
-};
-
-function renderProgressbarHP() {
-    this.elProgressbarHp.style.width = this.damageHP / this.defaultHP * 100 + '%'  
-};
 
 function chengeHP(count) {
-    this.damageHP -= count;
+    this.hp.current -= count;
     
-    if (this.damageHP <= 0) {
-        this.damageHP = 0;
+    if (this.hp.current <= 0) {
+        this.hp.current = 0;
         alert('Бедный ' + this.name + ' проиграл!');
         $btn.disabled = true;
         $btnLightning.disabled = true;
@@ -89,45 +71,30 @@ function chengeHP(count) {
     
 };
 
-function random(num) {
-    return Math.ceil(Math.random() * num)
+function random(max, min = 0) {
+    const num = max - min
+    return Math.ceil(Math.random() * num) + min;
 };
-function countKick() {
-    let click = 0
-   
-    return function (max, element) {
-        click++
-        
-        renderKick(click,max , element);
-            
-        console.log(click);
-    }
-}
-function renderKick(nowKick,maxKick,element) {
 
-    if (nowKick === maxKick) {
-        element == document.getElementById('kick-thunder-jolt') ? $btn.disabled = true : $btnLightning.disabled = true;         
-        }
-    element.innerText = (maxKick - nowKick) + '/' + maxKick ;
-}
     
 function generateLog(firstPerson, secondPerson, count) {
+    const { name, hp: { current, total } } = firstPerson;
+    const { name: enemyName } = secondPerson;
     
     const logs = [
-        `${firstPerson.name} поперхнулся, и за это ${secondPerson.name} с испугу приложил прямой удар коленом в лоб врага. Урон:${count} [${firstPerson.damageHP}/${firstPerson.defaultHP}]`,
-        `${firstPerson.name} забылся, но в это время наглый ${secondPerson.name}, приняв волевое решение, неслышно подойдя сзади, ударил. Урон:${count} [${firstPerson.damageHP}/${firstPerson.defaultHP}]`,
-        `${firstPerson.name} пришел в себя, но неожиданно ${secondPerson.name} случайно нанес мощнейший удар. Урон:${count} [${firstPerson.damageHP}/${firstPerson.defaultHP}]`,
-        `${firstPerson.name} поперхнулся, но в это время ${secondPerson.name} нехотя раздробил кулаком \<вырезанно цензурой\> противника. Урон:${count} [${firstPerson.damageHP}/${firstPerson.defaultHP}]`,
-        `${firstPerson.name} удивился, а ${secondPerson.name} пошатнувшись влепил подлый удар. Урон:${count} [${firstPerson.damageHP}/${firstPerson.defaultHP}]`,
-        `${firstPerson.name} высморкался, но неожиданно ${secondPerson.name} провел дробящий удар. Урон:${count} [${firstPerson.damageHP}/${firstPerson.defaultHP}]`,
-        `${firstPerson.name} пошатнулся, и внезапно наглый ${secondPerson.name} беспричинно ударил в ногу противника. Урон:${count} [${firstPerson.damageHP}/${firstPerson.defaultHP}]`,
-        `${firstPerson.name} расстроился, как вдруг, неожиданно ${secondPerson.name} случайно влепил стопой в живот соперника. Урон:${count} [${firstPerson.damageHP}/${firstPerson.defaultHP}]`,
-        `${firstPerson.name} пытался что-то сказать, но вдруг, неожиданно ${secondPerson.name} со скуки, разбил бровь сопернику. Урон:${count} [${firstPerson.damageHP}/${firstPerson.defaultHP}]`,
-        `${firstPerson.name} вспомнил что-то важное, но неожиданно ${secondPerson.name}, не помня себя от испуга, ударил в предплечье врага. Урон:${count} [${firstPerson.damageHP}/${firstPerson.defaultHP}]`,
+        `${name} поперхнулся, и за это ${enemyName} с испугу приложил прямой удар коленом в лоб врага. Урон:${count} [${current}/${total}]`,
+        `${name} забылся, но в это время наглый ${enemyName}, приняв волевое решение, неслышно подойдя сзади, ударил. Урон:${count} [${current}/${total}]`,
+        `${name} пришел в себя, но неожиданно ${enemyName} случайно нанес мощнейший удар. Урон:${count} [${current}/${total}]`,
+        `${name} поперхнулся, но в это время ${enemyName} нехотя раздробил кулаком \<вырезанно цензурой\> противника. Урон:${count} [${current}/${total}]`,
+        `${name} удивился, а ${enemyName} пошатнувшись влепил подлый удар. Урон:${count} [${current}/${total}]`,
+        `${name} высморкался, но неожиданно ${enemyName} провел дробящий удар. Урон:${count} [${current}/${total}]`,
+        `${name} пошатнулся, и внезапно наглый ${enemyName} беспричинно ударил в ногу противника. Урон:${count} [${current}/${total}]`,
+        `${name} расстроился, как вдруг, неожиданно ${enemyName} случайно влепил стопой в живот соперника. Урон:${count} [${current}/${total}]`,
+        `${name} пытался что-то сказать, но вдруг, неожиданно ${enemyName} со скуки, разбил бровь сопернику. Урон:${count} [${current}/${total}]`,
+        `${name} вспомнил что-то важное, но неожиданно ${enemyName}, не помня себя от испуга, ударил в предплечье врага. Урон:${count} [${current}/${total}]`,
     ];
     return logs[random(logs.length) - 1]
 
     
 }
 
-init();
