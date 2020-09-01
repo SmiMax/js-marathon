@@ -28,7 +28,7 @@
                 </h2>
                 <div class="hp">
                     <div class="bar">
-                        <div class="health" id="progressbar-character" style="width: 100%;"></div>
+                        <div class="health" id="progressbar-character" style="width: 100%"></div>
                     </div>
                     <span class="text" id="health-character">100 / 100</span>
                 </div>
@@ -38,10 +38,17 @@
 
         <div class="control">
             <button class="button" id="btn-kick">
-                Thunder Jolt
+                Thunder Jolt  
+                
             </button>
         </div>
 
+        <div class="control">
+            <button class="button" id="btn-lightning">
+                Lightning
+                
+            </button>
+        </div>
 
         <div class="pokemon enemy">
             <span class="lvl">Lv. 1</span>
@@ -54,17 +61,19 @@
                 </h2>
                 <div class="hp">
                     <div class="bar">
-                        <div class="health" id="progressbar-enemy" style="width: 100%;"></div>
+                        <div class="health" id="progressbar-enemy" style="width: 100%"></div>
                     </div>
                     <span class="text" id="health-enemy">100 / 100</span>
                 </div>
                 
             </div>
         </div>
+        
     </div>
+    <div id="logs"></div>
 </div>
 <div class="catch_screen"></div>
 
-<script src="main.js"></script>
+<script src="main.js" type="module"></script>
 </body>
 </html>
