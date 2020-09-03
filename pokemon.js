@@ -1,12 +1,13 @@
 class Selectors {
     constructor(name) {
         this.elHP = document.getElementById(`health-${name}`);
-        this.elProgressbarHP = document.getElementById(`progressbar-${name}`)
+        this.elProgressbarHP = document.getElementById(`progressbar-${name}`);
+        this.elName = document.getElementById(`name-${name}`)
     }    
 }
 
 class Pokemon extends Selectors {
-    constructor({ name, hp, type,selectors,attacks = [] }) {
+    constructor({ name, hp, type,selectors,attacks = [], img }) {
         super(selectors);
         this.name = name;
         this.hp = {
@@ -15,8 +16,9 @@ class Pokemon extends Selectors {
         };
         this.type = type;
         this.attacks = attacks;
-
+        this.img = img;
         this.renderHP();
+        this.renderSpecifications();
     };
     
     chengeHP = (count,cb ) => {
@@ -24,7 +26,8 @@ class Pokemon extends Selectors {
 
     if (this.hp.current <= 0) {
         this.hp.current = 0;
-    }
+        };
+    this.renderSpecifications();
     this.renderHP();
     cb && cb(count)
 
@@ -48,6 +51,12 @@ class Pokemon extends Selectors {
 
     };
 
+    renderSpecifications = () => {
+        const $img = document.querySelector(".sprite")
+        $img.src = this.img;
+        const {elName, name } = this;
+        elName.innerText = name;
+    };
     };
 
     export default Pokemon;

@@ -23,6 +23,19 @@ const player2 = new Pokemon({
 
 const $control = document.querySelector('.control');
 
+player2.attacks.forEach(item => {
+    const $btn = document.createElement('button');
+    $btn.classList.add('button')
+    $btn.innerText = item.name;
+    const btnCount = countBtn(item.maxCount, $btn);
+    $btn.addEventListener('click', () => {
+        btnCount();
+        player2.chengeHP(random(item.maxDamage, item.minDamage));
+    })
+    $control.appendChild($btn);
+
+});
+
 player1.attacks.forEach(item => {
     const $btn = document.createElement('button');
     $btn.classList.add('button')
@@ -30,7 +43,7 @@ player1.attacks.forEach(item => {
     const btnCount = countBtn(item.maxCount, $btn);
     $btn.addEventListener('click', () => {
         btnCount();
-        chengeHP(random(maxDamage, minDamage));
+        player1.chengeHP(random(item.maxDamage, item.minDamage));
     })
     $control.appendChild($btn);
 
