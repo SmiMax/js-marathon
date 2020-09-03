@@ -2,6 +2,7 @@ function random(max, min = 0) {
     const num = max - min
     return Math.ceil(Math.random() * num) + min;
 };
+
 function generateLog(firstPerson, secondPerson, count) {
     const { name, hp: { current, total } } = firstPerson;
     const { name: enemyName } = secondPerson;

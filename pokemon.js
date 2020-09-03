@@ -2,7 +2,8 @@ class Selectors {
     constructor(name) {
         this.elHP = document.getElementById(`health-${name}`);
         this.elProgressbarHP = document.getElementById(`progressbar-${name}`);
-        this.elName = document.getElementById(`name-${name}`)
+        this.elName = document.getElementById(`name-${name}`);
+        this.elImg = document.getElementById(`sprite-${name}`)
     }    
 }
 
@@ -52,9 +53,8 @@ class Pokemon extends Selectors {
     };
 
     renderSpecifications = () => {
-        const $img = document.querySelector(".sprite")
-        $img.src = this.img;
-        const {elName, name } = this;
+        const { elName, elImg, name,img } = this;
+        elImg.src = img;
         elName.innerText = name;
     };
     };

@@ -72,5 +72,11 @@ player1.attacks.forEach(item => {
 //     $logs.insertBefore($p, $logs.children[0]);
     
 // };
-    
 
+function log(count) {
+    const $logs = document.querySelector('#logs');
+    const log = this === player1 ? generateLog(this, player2, count) : generateLog(this, player1, count);
+    const $p = document.createElement('p');
+    $p.innerText = log;
+    $logs.insertBefore($p, $logs.children[0]);
+}
