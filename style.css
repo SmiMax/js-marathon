@@ -35,11 +35,13 @@ body {
 }
 
 .control {
-    width: 320px;
+    width: 500px;
     height: 260px;
     position: relative;
-    margin: 20px;
+    margin: 20px auto;
     display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 }
@@ -273,6 +275,7 @@ body {
     border-radius: 10px;
     min-height: 30px;
     vertical-align: middle;
+    margin: 5px auto;
     padding: 12px 20px;
     outline: none !important;
     cursor: pointer;
