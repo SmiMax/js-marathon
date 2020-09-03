@@ -6,17 +6,17 @@ const pokemon1 = pokemons[randomP(pokemons)];
 const pokemon2 = pokemons[randomP(pokemons)];
 
 function randomP(item) {
-    return Math.ceil(Math.random() * item.length)
+    return Math.ceil(Math.random() * item.length -1)
 }
 
 
 
-const player1 = new Pokemon({
+let player1 = new Pokemon({
     ...pokemon1,
     selectors: 'player1',
 });
 
-const player2 = new Pokemon({
+let player2 = new Pokemon({
     ...pokemon2,
     selectors: 'player2',
 });
