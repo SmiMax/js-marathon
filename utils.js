@@ -19,7 +19,7 @@ function generateLog(firstPerson, secondPerson, count) {
         `${name} пытался что-то сказать, но вдруг, неожиданно ${enemyName} со скуки, разбил бровь сопернику. Урон:${count} [${current}/${total}]`,
         `${name} вспомнил что-то важное, но неожиданно ${enemyName}, не помня себя от испуга, ударил в предплечье врага. Урон:${count} [${current}/${total}]`,
     ];
-    return logs[random(logs.length) - 1]
+    return logs[random(logs.length) - 1];
 
 
 };
