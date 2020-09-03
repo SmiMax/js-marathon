@@ -28,9 +28,9 @@ class Pokemon extends Selectors {
     if (this.hp.current <= 0) {
         this.hp.current = 0;
         };
-    this.renderSpecifications();
-    this.renderHP();
-    cb && cb(count)
+        this.renderSpecifications();
+        this.renderHP();
+        cb && cb(count)
 
 };
     renderHP = () => {
@@ -57,6 +57,10 @@ class Pokemon extends Selectors {
         elImg.src = img;
         elName.innerText = name;
     };
-    };
+
+    
+    
+};
+    
 
     export default Pokemon;

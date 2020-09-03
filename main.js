@@ -2,14 +2,12 @@ import Pokemon from "./pokemon.js"
 import { pokemons } from "./pokemons.js"
 import { random, generateLog, countBtn} from "./utils.js"
 
-const pokemon1 = pokemons[randomP(pokemons)];
-const pokemon2 = pokemons[randomP(pokemons)];
+let pokemon1 = pokemons[randomP(pokemons)];
+let pokemon2 = pokemons[randomP(pokemons)];
 
 function randomP(item) {
     return Math.ceil(Math.random() * item.length -1)
-}
-
-
+};
 
 let player1 = new Pokemon({
     ...pokemon1,
@@ -52,8 +50,6 @@ player1.attacks.forEach(item => {
 
 
 
-
-
 // function chengeHP(count) {
 //     this.hp.current -= count;
     
@@ -72,11 +68,3 @@ player1.attacks.forEach(item => {
 //     $logs.insertBefore($p, $logs.children[0]);
     
 // };
-
-function log(count) {
-    const $logs = document.querySelector('#logs');
-    const log = this === player1 ? generateLog(this, player2, count) : generateLog(this, player1, count);
-    const $p = document.createElement('p');
-    $p.innerText = log;
-    $logs.insertBefore($p, $logs.children[0]);
-}
