@@ -4,12 +4,14 @@ class Selectors {
         this.elProgressbarHP = document.getElementById(`progressbar-${name}`);
         this.elName = document.getElementById(`name-${name}`);
         this.elImg = document.getElementById(`sprite-${name}`)
+        this.elBtn = document.querySelectorAll('button')
     }    
 }
 
 class Pokemon extends Selectors {
-    constructor({ name, hp, type,selectors,attacks = [], img }) {
+    constructor({ id, name, hp, type,selectors,attacks = [], img }) {
         super(selectors);
+        this.id = id;
         this.name = name;
         this.hp = {
             current: hp,
@@ -28,15 +30,20 @@ class Pokemon extends Selectors {
     if (this.hp.current <= 0) {
         this.hp.current = 0;
         alert('Бедный ' + this.name + ' проиграл!');
+        console.log(this.elBtn)
+        this.elBtn.disabled = true;
         };
         this.renderSpecifications();
         this.renderHP();
         cb && cb(count)
+        
+
 
 };
     renderHP = () => {
     this.renderHPLife();
-    this.renderProgressbarHP();
+        this.renderProgressbarHP();
+        
 };
 
     renderHPLife = () => {
@@ -47,9 +54,8 @@ class Pokemon extends Selectors {
 
     renderProgressbarHP = () => {
         
-        const {elProgressbarHP, hp: { current, total } } = this;
+        const {elProgressbarHP, id ,hp: { current, total } } = this;
         elProgressbarHP.style.width = (current / total) * 100 + '%';
-        
 
     };
 
